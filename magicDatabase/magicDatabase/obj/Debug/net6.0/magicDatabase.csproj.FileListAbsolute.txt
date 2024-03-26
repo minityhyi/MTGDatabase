@@ -1,0 +1,15 @@
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.csproj.AssemblyReference.cache
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.AssemblyInfoInputs.cache
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.AssemblyInfo.cs
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.csproj.CoreCompileInputs.cache
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\bin\Debug\net6.0\magicDatabase.exe
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\bin\Debug\net6.0\magicDatabase.deps.json
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\bin\Debug\net6.0\magicDatabase.runtimeconfig.json
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\bin\Debug\net6.0\magicDatabase.dll
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\bin\Debug\net6.0\magicDatabase.pdb
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.dll
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\refint\magicDatabase.dll
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.pdb
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\magicDatabase.genruntimeconfig.cache
+C:\Users\andreas pc\Documents\GitHub\MTGDatabase\magicDatabase\magicDatabase\obj\Debug\net6.0\ref\magicDatabase.dll
