@@ -33,11 +33,6 @@ namespace magicDatabase.DomainModels
     [Name("loyalty")]
     public string? Loyalty { get; set; }
 
-        public Card()
-        {
-
-        }
-
         /// <summary>
         /// Finds a card based on the name provided.
         /// Otherwise, returns null.
