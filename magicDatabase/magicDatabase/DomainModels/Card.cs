@@ -1,4 +1,9 @@
-﻿namespace magicDatabase.DomainModels
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
+using System.Globalization;
+
+namespace magicDatabase.DomainModels
 {
     /// <summary>
     ///This class stores the data for a specific card from the CardDatabase
@@ -7,18 +12,30 @@
     /// </summary>
     public class Card
     {
-        public string? Name { get; set; }
-        public string? CMC { get; set; }
-        public string? Color { get; set; }
-        public string? Type { get; set; }
-        public string? Subtype { get; set; }
-        public string? Power { get; set; }
-        public string? Toughness { get; set; }
-        public string? Loyalty { get; set; }
+    [Name("name")]
+    public string? Name { get; set; }
 
-        public Card(string na)
+    [Name("manaValue")]
+    public string? CMC { get; set; }
+
+    [Name("colors")]
+    public string? Color { get; set; }
+
+    [Name("type")]
+    public string? Type { get; set; }
+
+    [Name("power")]
+    public string? Power { get; set; }
+
+    [Name("toughness")]
+    public string? Toughness { get; set; }
+
+    [Name("loyalty")]
+    public string? Loyalty { get; set; }
+
+        public Card()
         {
-            Name = na;
+
         }
 
         /// <summary>
@@ -30,57 +47,38 @@
         public static Card? FindCard(string name)
         {
             //path to the csv file. Change it to your location
-            var scvPath = @"C:\projects\MTGDatabase\AllPrintingsSCV\cards.csv";
-            try
+            var scvPath = @"C:\Users\andreas pc\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+
+            using var reader = new StreamReader(scvPath);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                using var reader = new StreamReader(scvPath);
-                
-                while (reader.EndOfStream == false)
+                HeaderValidated = null,
+                MissingFieldFound = null
+
+            });
+
+            //The card is found using CsvHelper
+            //this line generates a form of library of all the records in the database
+            var records = csv.GetRecords<Card>();
+            
+            //each record is a card object.
+            //it loops through each card object until it finds the on that matches the name written in the function
+            foreach (var record in records)
+            {
+                if(string.Equals(record.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
-                    var content = reader.ReadLine();
-                    var values = content.Split(",").ToList();
-                    if (values[51].Equals(name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        var CMC = values[50];
-                        var color = values[11];
-                        if (string.IsNullOrEmpty(color))
-                        {
-                            color = "colorless";
-                        }
-
-                        var result = new Card(name)
-                        {
-                            Type = values[76],
-                            Subtype = values[72],
-                            Power = values[56],
-                            Toughness = values[70],
-                            Loyalty = values[48],
-                            CMC = CMC,
-                            Color = color
-                        };
-
-                        return result;
-                    }
-
+                    //returns the card if found
+                    return record;
                 }
             }
-            catch (IOException e)
-            {
-                Console.WriteLine("An error occurred while reading the file: " + e.Message);
-            }
-
+            //returns null, if the card is not in the 
             return null;
         }
-
         public override string ToString()
         {
-            return $"CMC: {CMC}\ncolor: {Color}\ntype: {Type}\nsubtype: {Subtype}\npower: {Power}\ntoughness: {Toughness}\nloyalty: {Loyalty}";
+            return $"CMC: {CMC}\ncolor: {Color}\ntype: {Type}\npower: {Power}\ntoughness: {Toughness}\nloyalty: {Loyalty}";
         }
 
-        static bool rowHasData(List<string> cells)
-        {
-            return cells.Any(x => x.Length > 0);
-        }
 
         /// <summary>
         /// Extracts the data for the searched card

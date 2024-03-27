@@ -4,7 +4,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var searchString = "Sol Ring";
+        var searchString = "Jace, the Mind Sculptor";
 
         var card = Card.FindCard(searchString);
 
