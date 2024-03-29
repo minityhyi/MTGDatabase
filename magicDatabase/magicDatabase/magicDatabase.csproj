@@ -9,6 +9,9 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="31.0.2" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.04" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.04" />
   </ItemGroup>
 
 </Project>

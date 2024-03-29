@@ -1,4 +1,5 @@
 ﻿using magicDatabase.DomainModels;
+using magicDatabase.Repositories;
 
 internal class Program
 {
@@ -16,6 +17,16 @@ internal class Program
         {
             Console.WriteLine(card);
         }
+
+        using var db = new MagicContext();
+        db.Database.EnsureCreated();
+        
+
+        var repo = new DeckRepository(db);
+        
+        repo.AddCardToDeck(card, "The good deck");
+        
+
     }
 }
 

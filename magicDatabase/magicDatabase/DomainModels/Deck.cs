@@ -2,13 +2,12 @@
 {
     public class Deck
     {
-        public List<Card>? decklist { get; set; }
+        public int Id { get; set; }
+        public List<Card>? Decklist { get; set; }
+        public string? DeckName { get; set; }
 
-        public void addCardToSQL()
-        {
-            //imports card to SQLite3 Database
 
-        }
+
 
     }
 }

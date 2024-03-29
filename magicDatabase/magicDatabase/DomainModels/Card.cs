@@ -12,26 +12,32 @@ namespace magicDatabase.DomainModels
     /// </summary>
     public class Card
     {
-    [Name("name")]
-    public string? Name { get; set; }
 
-    [Name("manaValue")]
-    public string? CMC { get; set; }
+        public int Id { get; set; }
+        [Name("name")]
+        public string? Name { get; set; }
 
-    [Name("colors")]
-    public string? Color { get; set; }
+        [Name("manaValue")]
+        public string? CMC { get; set; }
 
-    [Name("type")]
-    public string? Type { get; set; }
+        [Name("colors")]
+        public string? Color { get; set; }
 
-    [Name("power")]
-    public string? Power { get; set; }
+        [Name("type")]
+        public string? Type { get; set; }
 
-    [Name("toughness")]
-    public string? Toughness { get; set; }
+        [Name("power")]
+        public string? Power { get; set; }
 
-    [Name("loyalty")]
-    public string? Loyalty { get; set; }
+        [Name("toughness")]
+        public string? Toughness { get; set; }
+
+        [Name("loyalty")]
+        public string? Loyalty { get; set; }
+
+        public int DeckId { get; set; }
+
+        public bool IsSideBoard { get; set; }
 
         /// <summary>
         /// Finds a card based on the name provided.
@@ -42,7 +48,7 @@ namespace magicDatabase.DomainModels
         public static Card? FindCard(string name)
         {
             //path to the csv file. Change it to your location
-            var scvPath = @"C:\Users\andreas pc\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+            var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
 
             using var reader = new StreamReader(scvPath);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -55,12 +61,12 @@ namespace magicDatabase.DomainModels
             //The card is found using CsvHelper
             //this line generates a form of library of all the records in the database
             var records = csv.GetRecords<Card>();
-            
+
             //each record is a card object.
             //it loops through each card object until it finds the on that matches the name written in the function
             foreach (var record in records)
             {
-                if(string.Equals(record.Name, name, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(record.Name, name, StringComparison.OrdinalIgnoreCase))
                 {
                     //returns the card if found
                     return record;
@@ -84,9 +90,5 @@ namespace magicDatabase.DomainModels
             throw new NotImplementedException();
         }
 
-        public static void addCardToDeck()
-        {
-            //adds the card to the decklist
-        }
     }
 }
