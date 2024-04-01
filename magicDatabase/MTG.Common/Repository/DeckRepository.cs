@@ -49,6 +49,35 @@ namespace MTG.Common.Repositories
             context.SaveChanges();
         }
 
+        public void RemoveCard(string deckName, string CardName)
+        {
+            var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
+
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id);
+
+            foreach(Card c in cards)
+            {
+                if (c.Name == CardName)
+                {
+                    context.Cards.Remove(c);
+                    break;
+                }
+
+                Console.WriteLine($"No card in the deck {deckName} with the name {CardName}");
+                break;
+            }
+            context.SaveChanges();
+
+            
+
+            
+            
+        }
+
+
+
+
         //Methode:Add card object to DeckSQL
         //Methode:Remove card object to DeckSQL
         //Mothode: Add To Sideboard

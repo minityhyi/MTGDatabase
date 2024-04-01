@@ -8,5 +8,8 @@ namespace MTG.Common.Repository.Interfaces
         void CreateDeck(string deckName);
         List<string> GetAllDecks();
         void DeleteDeck(string deckName);
+
+        void RemoveCard(string deckName, string CardName);
+
     }
 }

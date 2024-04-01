@@ -13,10 +13,10 @@ namespace MTG.Common
         public MagicContext()
         {
             // Andreas connection string
-            //ConnectionString = @"Server=localhost\SQLEXPRESS;Initial Catalog=mtg.db;Integrated Security=True;TrustServerCertificate=True;";
+            ConnectionString = @"Server=localhost\SQLEXPRESS;Initial Catalog=mtg.db;Integrated Security=True;TrustServerCertificate=True;";
 
             // Casper connection string
-            ConnectionString = @"Server=(localdb)\MSSQLLocalDB;Initial Catalog=mtg.db;Integrated Security=True;TrustServerCertificate=True;";
+            //ConnectionString = @"Server=(localdb)\MSSQLLocalDB;Initial Catalog=mtg.db;Integrated Security=True;TrustServerCertificate=True;";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

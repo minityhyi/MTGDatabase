@@ -49,10 +49,10 @@ namespace MTG.Common.DomainModels
         {
             //path to the csv file. Change it to your location
             // Andreas path:
-            //var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+            var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
 
             // Casper path:
-            var scvPath = @"C:\projects\MTGDatabase\AllPrintingsSCV\cards.csv";
+            //var scvPath = @"C:\projects\MTGDatabase\AllPrintingsSCV\cards.csv";
 
             using var reader = new StreamReader(scvPath);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
