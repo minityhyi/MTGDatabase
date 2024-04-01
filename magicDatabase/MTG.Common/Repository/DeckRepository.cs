@@ -32,6 +32,23 @@ namespace MTG.Common.Repositories
             context.SaveChanges();
         }
 
+        public List<string> GetAllDecks()
+        {
+            return context.Decks.Where(d => d.DeckName != null).Select(d => d.DeckName).AsEnumerable().Cast<string>().ToList();
+        }
+
+        public void DeleteDeck(string deckName)
+        {
+            var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
+
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id).ToList();
+            
+            context.Decks.Remove(deck);
+            context.Cards.RemoveRange(cards);
+            context.SaveChanges();
+        }
+
         //Methode:Add card object to DeckSQL
         //Methode:Remove card object to DeckSQL
         //Mothode: Add To Sideboard

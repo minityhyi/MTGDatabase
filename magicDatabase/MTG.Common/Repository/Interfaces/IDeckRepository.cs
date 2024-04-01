@@ -6,5 +6,7 @@ namespace MTG.Common.Repository.Interfaces
     {
         void AddCardToDeck(Card card, string deckName);
         void CreateDeck(string deckName);
+        List<string> GetAllDecks();
+        void DeleteDeck(string deckName);
     }
 }
