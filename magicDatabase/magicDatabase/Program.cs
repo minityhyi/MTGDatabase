@@ -12,14 +12,15 @@ internal class Program
     private static IContainer Container { get; set; }
     static void Main(string[] args)
     {
+        /// GUIDE til at tilføje ny kommando:
+        /// 1. Opret en ny klasse under mappen "Commands"
+        /// 2. Tilføj den nye klasse til CommandConvensins.cs i mappen "DependencyConvensions".
+        /// 3. Det er det. Nu kan du køre din kommando med: "dotnet run [Name of kommando class]"
 
-        /// Hej Andreas,
-        /// Jeg har ændret en masse på struktueren af programmet nu
-        /// Så når du køre projeket i med "dotnet run" skal du nu også skrive hvilken kommando der skal køres.
-        /// hvorefter du også kan give nogle argumenter. F.eks. prøv følgende: 
-        /// dotnet run CreateDeck "This is a cool deck"
-        /// dotnet run DeckList
-        /// dotnet run DeleteDeck "This is a cool deck"
+        /// GUIDE til at udvide deckRepository:
+        /// 1. Opret metoden i IDeckRepository
+        /// 2. Opret metoden i DeckRepository
+        /// 3. Du kan nu injecte DeckRepository i constructeren i din kommando og kalde din metode. 
 
         var services = new ServiceCollection();
         InitializeContainer(services);

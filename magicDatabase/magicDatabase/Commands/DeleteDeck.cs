@@ -7,6 +7,7 @@ namespace magicDatabase.Commands
     {
         private readonly IDeckRepository deckRepo;
 
+        // Constructor
         public DeleteDeck(IDeckRepository deckRepo)
         {
             this.deckRepo = deckRepo;
