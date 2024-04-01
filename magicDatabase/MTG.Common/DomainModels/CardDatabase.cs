@@ -1,4 +1,4 @@
-﻿namespace magicDatabase.DomainModels
+﻿namespace MTG.Common.DomainModels
 {
     public class CardDatabase
     {

@@ -3,7 +3,7 @@ using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using System.Globalization;
 
-namespace magicDatabase.DomainModels
+namespace MTG.Common.DomainModels
 {
     /// <summary>
     ///This class stores the data for a specific card from the CardDatabase
@@ -48,7 +48,11 @@ namespace magicDatabase.DomainModels
         public static Card? FindCard(string name)
         {
             //path to the csv file. Change it to your location
-            var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+            // Andreas path:
+            //var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+
+            // Casper path:
+            var scvPath = @"C:\projects\MTGDatabase\AllPrintingsSCV\cards.csv";
 
             using var reader = new StreamReader(scvPath);
             using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)

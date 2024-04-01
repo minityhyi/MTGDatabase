@@ -1,8 +1,10 @@
-using magicDatabase.DomainModels;
 
-namespace magicDatabase.Repositories
+using MTG.Common.DomainModels;
+using MTG.Common.Repository.Interfaces;
+
+namespace MTG.Common.Repositories
 {
-    public class DeckRepository
+    public class DeckRepository : IDeckRepository
     {
         private readonly MagicContext context;
 
@@ -22,7 +24,7 @@ namespace magicDatabase.Repositories
             context.SaveChanges();
         }
 
-        public void CreateDeck(string deckName) 
+        public void CreateDeck(string deckName)
         {
             context.Decks.Add(new Deck{
                 DeckName = deckName

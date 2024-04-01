@@ -1,5 +1,8 @@
-﻿using magicDatabase.DomainModels;
-using magicDatabase.Repositories;
+﻿using Autofac;
+using Microsoft.Extensions.DependencyInjection;
+using MTG.Common;
+using MTG.Common.DomainModels;
+using MTG.Common.Repositories;
 
 internal class Program
 {
@@ -19,6 +22,7 @@ internal class Program
         }
 
         using var db = new MagicContext();
+        db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
         
 
