@@ -12,6 +12,15 @@ internal class Program
     private static IContainer Container { get; set; }
     static void Main(string[] args)
     {
+
+        /// Hej Andreas,
+        /// Jeg har ændret en masse på struktueren af programmet nu
+        /// Så når du køre projeket i med "dotnet run" skal du nu også skrive hvilken kommando der skal køres.
+        /// hvorefter du også kan give nogle argumenter. F.eks. prøv følgende: 
+        /// dotnet run CreateDeck "This is a cool deck"
+        /// dotnet run DeckList
+        /// dotnet run DeleteDeck "This is a cool deck"
+
         var services = new ServiceCollection();
         InitializeContainer(services);
 
