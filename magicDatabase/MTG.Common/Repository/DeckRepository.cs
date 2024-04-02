@@ -1,4 +1,6 @@
 
+using System.Threading.Tasks.Dataflow;
+using Microsoft.VisualBasic;
 using MTG.Common.DomainModels;
 using MTG.Common.Repository.Interfaces;
 
@@ -12,16 +14,33 @@ namespace MTG.Common.Repositories
             this.context = context;
         }
         
-        public void AddCardToDeck(Card card, string deckName) 
+        //Adds a card to a specific deck.
+        public void AddCardToDeck(string deckName, Card card, bool isMain=true) 
         {
             var deckId = context.Decks.FirstOrDefault(d => d.DeckName == deckName)?.Id;
-            if (!deckId.HasValue) {
-                return;
-            }
 
             card.DeckId = deckId.Value;
-            context.Cards.Add(card);
-            context.SaveChanges();
+
+            //By default the card is added to the mainboard, if not then it is added to sideboard
+            if(isMain != true)
+            {
+                card.IsSideBoard = true;
+            }
+            
+            //No more than 4 of the same cards in a deck
+            //This looks for cards that booth have the given deckId and card
+            var cards = context.Cards.Where(c => c.DeckId == deckId & c.Name == card.Name);
+            if(cards.Count() >= 4)
+            {
+                Console.WriteLine("Already four cards in he deck");
+            }
+
+            if(cards.Count() < 4)
+            {
+                context.Cards.Add(card);
+                Console.WriteLine($"The card {card.Name} have been added to {deckName}");
+                context.SaveChanges();   
+            }
         }
 
         public void CreateDeck(string deckName)
@@ -54,7 +73,7 @@ namespace MTG.Common.Repositories
             var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
             ArgumentNullException.ThrowIfNull(deck);
 
-            var cards = context.Cards.Where(c => c.DeckId == deck.Id);
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id).ToList();
 
             foreach(Card c in cards)
             {
@@ -63,23 +82,12 @@ namespace MTG.Common.Repositories
                     context.Cards.Remove(c);
                     break;
                 }
-
-                Console.WriteLine($"No card in the deck {deckName} with the name {CardName}");
-                break;
             }
             context.SaveChanges();
-
-            
-
-            
-            
         }
 
 
 
-
-        //Methode:Add card object to DeckSQL
-        //Methode:Remove card object to DeckSQL
         //Mothode: Add To Sideboard
         //Methode: Create new deck
         //Methode: Delete Deck

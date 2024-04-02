@@ -15,7 +15,7 @@ namespace magicDatabase.Commands
             if (args.Length != 2)
             {
                 Console.WriteLine("Incorrect number of parameters found.");
-                Console.WriteLine("Expected a two parameters");
+                Console.WriteLine("Expected two parameters");
                 return 1;
             }
 
@@ -23,9 +23,6 @@ namespace magicDatabase.Commands
             var card = args[1];
 
             deckRepo.RemoveCard(deck, card);
-
-
-
             return 0;
 
 
