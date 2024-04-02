@@ -73,23 +73,25 @@ namespace MTG.Common.Repositories
             var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
             ArgumentNullException.ThrowIfNull(deck);
 
-            var cards = context.Cards.Where(c => c.DeckId == deck.Id).ToList();
+            Card? card = context.Cards.FirstOrDefault(c => c.DeckId == deck.Id & c.Name == CardName);
+            ArgumentNullException.ThrowIfNull(card);
 
-            foreach(Card c in cards)
-            {
-                if (c.Name == CardName)
-                {
-                    context.Cards.Remove(c);
-                    break;
-                }
-            }
+            context.Cards.Remove(card);
+            Console.WriteLine($"Card {CardName} removed from deck {deckName}");
+
             context.SaveChanges();
         }
 
+        public void RenameDeck(string deckName, string newName)
+        {
+            Deck deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
 
+            deck.DeckName = newName;
+            context.Update(deck);
+            context.SaveChanges();
+        }
 
-        //Mothode: Add To Sideboard
-        //Methode: Create new deck
         //Methode: Delete Deck
         //Methode: Rename Deck
         //Methode: get deck

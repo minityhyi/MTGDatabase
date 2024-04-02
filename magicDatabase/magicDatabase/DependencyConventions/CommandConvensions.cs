@@ -24,6 +24,7 @@ namespace magicDatabase.DependencyConventions
             builder.RegisterType<Help>().Named<ICommand>(nameof(Help));
             builder.RegisterType<RemoveCard>().Named<ICommand>(nameof(RemoveCard));
             builder.RegisterType<AddCardToDeck>().Named<ICommand>(nameof(AddCardToDeck));
+            builder.RegisterType<RenameDeck>().Named<ICommand>(nameof(RenameDeck));
         }
     }
 }

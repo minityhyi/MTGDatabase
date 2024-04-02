@@ -24,6 +24,5 @@ namespace MTG.Common
             optionsBuilder.UseSqlServer(ConnectionString);
             base.OnConfiguring(optionsBuilder);
         }
-
     }
 }
