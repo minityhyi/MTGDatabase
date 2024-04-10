@@ -26,9 +26,6 @@ namespace magicDatabase.Commands
             string newName = args[1];
 
             deckRepo.RenameDeck(deckName, newName);
-
-
-
             return 0;
         }
     }

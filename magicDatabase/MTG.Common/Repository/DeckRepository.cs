@@ -26,13 +26,25 @@ namespace MTG.Common.Repositories
             {
                 card.IsSideBoard = true;
             }
+
+            if(isMain == true)
+            {
+                card.IsSideBoard = false;
+            }
+
+            var cards = context.Cards.Where(c => c.DeckId == deckId & c.IsSideBoard == true);
+            if(cards.Count() >= 15)
+            {
+                Console.WriteLine("The sideboard is full (limit = 15), delete sideboard cards to add more");
+            } 
             
             //No more than 4 of the same cards in a deck
             //This looks for cards that booth have the given deckId and card
-            var cards = context.Cards.Where(c => c.DeckId == deckId & c.Name == card.Name);
+            cards = context.Cards.Where(c => c.DeckId == deckId & c.Name == card.Name);
             if(cards.Count() >= 4)
             {
                 Console.WriteLine("Already four cards in he deck");
+                return;
             }
 
             if(cards.Count() < 4)
@@ -41,6 +53,7 @@ namespace MTG.Common.Repositories
                 Console.WriteLine($"The card {card.Name} have been added to {deckName}");
                 context.SaveChanges();   
             }
+
         }
 
         public void CreateDeck(string deckName)
@@ -92,8 +105,7 @@ namespace MTG.Common.Repositories
             context.SaveChanges();
         }
 
-        //Methode: Delete Deck
-        //Methode: Rename Deck
+
         //Methode: get deck
         //methode: get mainboard
         //methode: get Sideboard

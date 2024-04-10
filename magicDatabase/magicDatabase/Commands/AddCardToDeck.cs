@@ -35,13 +35,25 @@ namespace magicDatabase.Commands
                 return 1;
             }
 
-            string? main = args[2].ToLower();
             bool isMain = true;
 
-            if( main == "f" || main == "false" || main == "side")
+            if(args.Length == 3)
             {
-                isMain = false; 
+                string? main = args[2].ToLower();
+
+                if( main == "f" || main == "false" || main == "side")
+                {
+                    isMain = false; 
+                }
+
+                if( main != "f" || main != "false" || main != "side")
+                {
+                    Console.WriteLine("The third parameter should be 'f' 'false' or 'side' to indicate that the card should be added to the sideboard");
+                }
+
             }
+            
+
 
             deckRepo.AddCardToDeck(deck, card, isMain);
             return 0;
