@@ -37,6 +37,8 @@ namespace magicDatabase.Commands
 
             bool isMain = true;
 
+
+            //The 3. argument of the command is optinal. This is used to check if the 3. argument is used
             if(args.Length == 3)
             {
                 string? main = args[2].ToLower();

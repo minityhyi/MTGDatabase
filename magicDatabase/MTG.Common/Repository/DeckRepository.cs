@@ -105,8 +105,45 @@ namespace MTG.Common.Repositories
             context.SaveChanges();
         }
 
+        public void GetDeck(string deckName)
+        {
+            var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
 
-        //Methode: get deck
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id & c.IsSideBoard == false).ToList();
+            
+            foreach(Card card in cards)
+            {
+                Console.WriteLine(card.Name);
+            }
+            
+        }
+
+        public void GetMain(string deckName)
+        {
+            var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
+
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id).ToList();
+            foreach(Card card in cards)
+            {
+                Console.WriteLine(card.Name);
+            }
+        }
+
+        public void GetSide(string deckName)
+        {
+            var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
+
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id).ToList();
+            foreach(Card card in cards)
+            {
+                Console.WriteLine(card.Name);
+            }
+        }
+
+
         //methode: get mainboard
         //methode: get Sideboard
         //methode: impoert decklist: imports text file
