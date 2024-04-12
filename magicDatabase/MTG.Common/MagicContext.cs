@@ -12,8 +12,9 @@ namespace MTG.Common
 
         public MagicContext()
         {
-            // Andreas connection string
+            // Andreas Bærbar connection string
             ConnectionString = @"Server=localhost\SQLEXPRESS;Initial Catalog=mtg.db;Integrated Security=True;TrustServerCertificate=True;";
+
 
             // Casper connection string
             //ConnectionString = @"Server=(localdb)\MSSQLLocalDB;Initial Catalog=mtg.db;Integrated Security=True;TrustServerCertificate=True;";

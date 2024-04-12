@@ -31,7 +31,8 @@ namespace MTG.Common.Repositories
             {
                 card.IsSideBoard = false;
             }
-
+            //there is a limit of 15 cards in a sideboard
+            //this stops the user from adding anymore
             var cards = context.Cards.Where(c => c.DeckId == deckId & c.IsSideBoard == true);
             if(cards.Count() >= 15)
             {
@@ -143,9 +144,43 @@ namespace MTG.Common.Repositories
             }
         }
 
+        public void ExportDeck(string deckName)
+        {            
+            // Define the file path
+            string basePath = $@"C:\Users\andreas pc\Documents\GitHub\MTGDatabase\DeckTextFiles\";
+            string filePath = $"{basePath}{deckName}.txt";
 
-        //methode: get mainboard
-        //methode: get Sideboard
+            int counter = 1;
+
+            while(File.Exists(filePath))
+            {
+                filePath = $"{basePath}{deckName}{counter}.txt";
+                counter ++;
+            }
+            
+            //Finds the cards from the deck
+            var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
+            ArgumentNullException.ThrowIfNull(deck);
+            var cards = context.Cards.Where(c => c.DeckId == deck.Id).Select(c=> c.Name).ToList();
+
+            // Create a StreamWriter to write to the file
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach(string cardName in cards)
+                {
+                    writer.WriteLine(cardName);
+                }
+
+                Console.WriteLine($"The deck {deckName} have been exported");
+            }
+        }
+
+
+
+        
+
+
+
         //methode: impoert decklist: imports text file
         //Methode: Export Decklist: generates text file
 

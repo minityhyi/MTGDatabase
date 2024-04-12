@@ -2,11 +2,11 @@ using MTG.Common.Repository.Interfaces;
 
 namespace magicDatabase.Commands
 {
-    public class GetSide : ISyncCommand
+    public class ExportDeck : ISyncCommand
     {
         private readonly IDeckRepository deckRepo;
 
-        public GetSide(IDeckRepository deckRepo)
+        public ExportDeck(IDeckRepository deckRepo)
         {
             this.deckRepo = deckRepo;
         }
@@ -23,7 +23,7 @@ namespace magicDatabase.Commands
 
             string deckName = args[0];
 
-            deckRepo.GetSide(deckName);
+            deckRepo.ExportDeck(deckName);
 
 
 

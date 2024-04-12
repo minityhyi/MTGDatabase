@@ -48,8 +48,11 @@ namespace MTG.Common.DomainModels
         public static Card? FindCard(string name)
         {
             //path to the csv file. Change it to your location
-            // Andreas path:
-            var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+            // Andreas bærbar path:
+            //var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+
+            // Andreas stationær path:
+            var scvPath = @"C:\Users\andreas pc\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
 
             // Casper path:
             //var scvPath = @"C:\projects\MTGDatabase\AllPrintingsSCV\cards.csv";
