@@ -47,10 +47,10 @@ namespace magicDatabase.Commands
                 {
                     isMain = false; 
                 }
-
-                if( main != "f" || main != "false" || main != "side")
+                else
                 {
                     Console.WriteLine("The third parameter should be 'f' 'false' or 'side' to indicate that the card should be added to the sideboard");
+                    return 1;
                 }
 
             }
