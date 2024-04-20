@@ -70,6 +70,12 @@ namespace MTG.Common.Repositories
         /// <param name="deckName"></param>
         public void CreateDeck(string deckName)
         {
+            var sameNameDecks = context.Decks.Where(d => d.DeckName != null && d.DeckName.StartsWith(deckName)).ToList();
+            if (sameNameDecks.Count != 0)
+            {
+                deckName += sameNameDecks.Count +1;
+            }
+
             context.Decks.Add(new Deck{
                 DeckName = deckName
             });
@@ -133,17 +139,13 @@ namespace MTG.Common.Repositories
         /// prints the decklist of a deck in the console
         /// </summary>
         /// <param name="deckName"></param>
-        public void GetDeck(string deckName)
+        public List<Card> GetDeck(string deckName)
         {
             var deck = context.Decks.FirstOrDefault(d => d.DeckName == deckName);
             ArgumentNullException.ThrowIfNull(deck);
 
             var cards = context.Cards.Where(c => c.DeckId == deck.Id).ToList();
-            
-            foreach(Card card in cards)
-            {
-                Console.WriteLine(card.Name);
-            }
+            return cards;
             
         }
         /// <summary>
@@ -248,8 +250,11 @@ namespace MTG.Common.Repositories
 
             foreach (string line in lines)
             {
-                if (line.EndsWith(":"))
-                boardChecker ++;
+                if (line.ToLower().StartsWith("main") || line.ToLower().StartsWith("side"))
+                {
+                    boardChecker++;
+                    continue;
+                }
 
                 Match match = Regex.Match(line, @"^(\d+)\s+(.+)$");
                 if (match.Success)
@@ -269,7 +274,7 @@ namespace MTG.Common.Repositories
 
                         card.DeckId = deckId.Value;
 
-                        context.Add(card);
+                        context.Cards.Add(card);
                     }
                 }
                 else
@@ -294,7 +299,28 @@ Sideboard:
             }
         }
 
-        
+        public void Copy(string deckName)
+        {
+            var deckId = context.Decks.FirstOrDefault(d => d.DeckName == deckName)?.Id;
+
+            var cards = context.Cards.Where(c => c.DeckId == deckId & c.IsSideBoard == false).ToList();
+
+            var newDeck = new Deck()
+            {
+                DeckName = deckName + " (copy)",
+            };
+            context.Decks.Add(newDeck);
+            context.SaveChanges();
+
+            foreach (var card in cards )
+            {
+                card.DeckId = newDeck.Id;
+            }
+
+            context.SaveChanges();
+        }
+
+
         //methode: impoert decklist: imports text file
 
     }

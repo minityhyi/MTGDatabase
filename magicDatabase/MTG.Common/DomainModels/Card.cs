@@ -2,6 +2,7 @@
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using System.Globalization;
+using System.Xml.Linq;
 
 namespace MTG.Common.DomainModels
 {
@@ -97,5 +98,64 @@ namespace MTG.Common.DomainModels
             throw new NotImplementedException();
         }
 
+        public static List<Card> Search(string search)
+        {
+            //path to the csv file. Change it to your location
+            // Andreas bærbar path:
+            //var scvPath = @"C:\Users\Bruger\OneDrive\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+
+            // Andreas stationær path:
+            //var scvPath = @"C:\Users\andreas pc\Documents\GitHub\MTGDatabase\AllPrintingsSCV\cards.csv";
+
+            // Casper path:
+            var scvPath = @"C:\projects\MTGDatabase\AllPrintingsSCV\cards.csv";
+
+            using var reader = new StreamReader(scvPath);
+            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HeaderValidated = null,
+                MissingFieldFound = null
+
+            });
+
+            //The card is found using CsvHelper
+            //this line generates a form of library of all the records in the database
+            var records = csv.GetRecords<Card>();
+
+            var result = new List<(Card card, int metric)>();
+
+            //each record is a card object.
+            //it loops through each card object until it finds the on that matches the name written in the function
+            foreach (var record in records)
+            {
+                if (record.Name != null && 
+                    record.Name.ToLower().Contains(search.ToLower()) &&
+                    !result.Any(r => r.card.Name.ToLower() == record.Name.ToLower()))
+                {
+                    var toAdd = (record, GetSearchMetric(record, search));
+
+                    if (result.Count >= 10)
+                    {
+                        var smallest = result.MaxBy(r => r.metric);
+                        if (toAdd.Item2 < smallest.metric)
+                        {
+                            result.Remove(smallest);
+                            result.Add(toAdd);
+                        }
+                    }
+                    else
+                    {
+                        result.Add(toAdd);
+                    }
+                }
+            }
+
+            return result.OrderBy(r => r.metric).Select(r => r.card).ToList();
+        }
+
+        private static int GetSearchMetric(Card card, string searchQuery)
+        {
+            return card.Name.IndexOf(searchQuery);
+        }
     }
 }

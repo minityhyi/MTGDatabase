@@ -10,13 +10,11 @@ namespace MTG.Common.Repository.Interfaces
         void DeleteDeck(string deckName);
         void RemoveCard(string deckName, string cardName);
         void RenameDeck(string deckName, string newName);
-        void GetDeck(string deckName);
+        List<Card> GetDeck(string deckName);
         void GetMain(string deckName);
         void GetSide(string deckName);
         void ExportDeck(string deckName);
-        void ImportDeck(string deckName);
-
-
-
+        void ImportDeck(string path);
+        void Copy(string deckName);
     }
 }

@@ -33,6 +33,8 @@ namespace MTGApplication
                     services.AddTransient<IDeckRepository, DeckRepository>();
                     services.AddTransient<Oversigt>();
                     services.AddTransient<DeckForm>();
+                    services.AddTransient<ConfirmDialog>();
+                    services.AddTransient<ImportForm>();
                 });
         }
     }
