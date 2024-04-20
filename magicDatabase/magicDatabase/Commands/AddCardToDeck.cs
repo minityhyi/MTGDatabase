@@ -50,7 +50,7 @@ namespace magicDatabase.Commands
                 else
                 {
                     Console.WriteLine("The third parameter should be 'f' 'false' or 'side' to indicate that the card should be added to the sideboard");
-                    return 1;
+                    return 0;
                 }
 
             }

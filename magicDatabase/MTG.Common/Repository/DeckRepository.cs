@@ -4,6 +4,9 @@ using Microsoft.VisualBasic;
 using MTG.Common.DomainModels;
 using MTG.Common.Repository.Interfaces;
 using magicDatabase.RepHelp;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Configuration;
 
 namespace MTG.Common.Repositories
 {
@@ -219,6 +222,75 @@ namespace MTG.Common.Repositories
                     writer.WriteLine(c);
                 }
                 Console.WriteLine($"The deck {deckName} have been exported");
+            }
+        }
+
+        public void ImportDeck(string path)
+        {
+
+            //extract the name of the deck from the filepath, and creates an empty with the name
+            string deckName = Path.GetFileNameWithoutExtension(path);
+            Console.WriteLine(deckName);
+            context.Decks.Add(new Deck{
+            DeckName = deckName
+            });
+            context.SaveChanges();
+            //finds the deckId of the newly created deck
+            var deckId = context.Decks.FirstOrDefault(d => d.DeckName == deckName)?.Id;
+
+            string text = File.ReadAllText(path);
+
+            List<Card> listOfCards = new List<Card>();
+
+            string[] lines = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            int boardChecker = 0;
+
+            foreach (string line in lines)
+            {
+                if (line.EndsWith(":"))
+                boardChecker ++;
+
+                Match match = Regex.Match(line, @"^(\d+)\s+(.+)$");
+                if (match.Success)
+                {
+
+                    int quantity = int.Parse(match.Groups[1].Value);
+                    string cardName = match.Groups[2].Value;
+
+                    // Add the card to the list the specified number of times
+                    for (int i = 0; i < quantity; i++)
+                    {
+                        Card? card = Card.FindCard(cardName);
+                        if(boardChecker == 1)
+                        card.IsSideBoard = false;
+                        if (boardChecker == 2)
+                        card.IsSideBoard = true;
+
+                        card.DeckId = deckId.Value;
+
+                        context.Add(card);
+                    }
+                }
+                else
+                {
+                    Console.Write("wrong fileformat\nThe file should be written like this\n");
+                    Console.WriteLine(@"Mainboard:
+4 Shivan Dragon
+2 Sol Ring
+1 Black Lotus
+
+Sideboard:
+1 Sol Ring
+3 Mox Diamond");
+                    break;
+                }
+                context.SaveChanges();
+            }
+
+            foreach (Card n in listOfCards)
+            {
+                Console.WriteLine(n);
             }
         }
 

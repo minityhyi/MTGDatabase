@@ -1,12 +1,13 @@
+
 using MTG.Common.Repository.Interfaces;
 
 namespace magicDatabase.Commands
 {
-    public class ExportDeck : ISyncCommand
+    public class ImportDeck : ISyncCommand
     {
         private readonly IDeckRepository deckRepo;
 
-        public ExportDeck(IDeckRepository deckRepo)
+        public ImportDeck(IDeckRepository deckRepo)
         {
             this.deckRepo = deckRepo;
         }
@@ -21,11 +22,18 @@ namespace magicDatabase.Commands
                 return 1;
             }
 
-            string deckName = args[0];
+            string filePath = args[0];
 
-            deckRepo.ExportDeck(deckName);
+            bool pathCheck = Path.IsPathRooted(filePath) && !string.IsNullOrWhiteSpace(Path.GetFullPath(filePath));
 
+            if(pathCheck == false)
+            {
+                Console.WriteLine("Please provide filepath for the .txt file you want to import");
+                return 1;
+            }
+            
 
+            deckRepo.ImportDeck(filePath);
 
             return 0;
         }

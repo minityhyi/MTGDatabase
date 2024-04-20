@@ -27,7 +27,7 @@ namespace magicDatabase.Commands
 
 
 
-            return 1;
+            return 0;
         }
     }
 }

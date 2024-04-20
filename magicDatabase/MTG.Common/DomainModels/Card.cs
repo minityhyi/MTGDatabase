@@ -79,7 +79,7 @@ namespace MTG.Common.DomainModels
                     return record;
                 }
             }
-            //returns null, if the card is not in the 
+            //returns null, if the card is not in the database
             return null;
         }
         public override string ToString()
