@@ -8,12 +8,13 @@ namespace MTGApplication
     {
         private readonly IDeckRepository deckRepository;
         private readonly IServiceProvider serviceProvider;
+        public List<Control> controlsAdded { get; set; }
         public Oversigt(IDeckRepository deckRepository, IServiceProvider serviceProvider)
         {
             InitializeComponent();
             this.deckRepository = deckRepository;
             this.serviceProvider = serviceProvider;
-            ReloadDecks();
+            controlsAdded = new List<Control>();
         }
 
         private void showDeckBtn_Click(object sender, EventArgs e)
@@ -21,18 +22,14 @@ namespace MTGApplication
             ReloadDecks();
         }
 
-        private void AddBtn_Click(object sender, EventArgs e)
-        {
-            var newDeckName = DeckNameText.Text;
-
-            deckRepository.CreateDeck(newDeckName);
-
-            ReloadDecks();
-        }
-
         private void ReloadDecks()
         {
-            DeckPanel.Controls.Clear();
+            foreach (var control in Controls.OfType<Button>().Where(b => b.Name == "deckButton"))
+            {
+                Controls.Remove(control);
+                control.Hide();
+                control.Dispose();
+            }
 
             allDecksLabel.Text = "Getting the decks...";
             var allDecks = deckRepository.GetAllDecks();
@@ -40,103 +37,19 @@ namespace MTGApplication
 
             for (var i = 0; i < allDecks.Count; i++)
             {
-                var deckButton = CreateDeckButton(allDecks, i);
-                var deleteButton = CreateDeleteButton(allDecks, i, deckButton);
-                var menuStrip = CreateMenuButton(allDecks, i, deleteButton);
+                var tmpButton = new Button();
 
-                DeckPanel.Controls.Add(menuStrip);
-                DeckPanel.Controls.Add(deleteButton);
-                DeckPanel.Controls.Add(deckButton);
-                DeckPanel.AutoScroll = true;
+                tmpButton.Size = new Size(150, 50);
+                tmpButton.Location = new Point(showDeckBtn.Location.X,
+                    showDeckBtn.Location.Y + (i * 10) + showDeckBtn.Size.Height + (i * tmpButton.Size.Height));
+                tmpButton.Text = allDecks[i];
+                tmpButton.Click += DeckClick;
+                tmpButton.Name = "deckButton";
+                tmpButton.Show();
+                Controls.Add(tmpButton);
             }
 
             allDecksLabel.Text = "Decks are loaded now.";
-        }
-
-        private Control CreateMenuButton(List<string> allDecks, int i, Button deleteButton)
-        {
-            var menuStrip = new MenuStrip();
-            menuStrip.Location = new Point(
-                deleteButton.Location.X + deleteButton.Size.Width + 10,
-                deleteButton.Location.Y);
-            menuStrip.Text = "...";
-            menuStrip.Dock = DockStyle.None;
-            menuStrip.AllowDrop = true;
-
-            var menuOptions = new ToolStripMenuItem("...");
-            menuOptions.DropDownItems.Add("Copy", null, (o, e) =>
-            {
-                deckRepository.Copy(allDecks[i]);
-                ReloadDecks();
-            });
-            menuOptions.DropDownItems.Add("Export", null, (o,e) =>
-            {
-                deckRepository.ExportDeck(allDecks[i]);
-            });
-            menuOptions.DropDownItems.Add("Import", null, (o, e) =>
-            {
-                var importForm = serviceProvider.GetRequiredService<ImportForm>();
-                importForm.Show();
-            });
-            menuOptions.DropDownItems.Add("Delete", null, (o, e) =>
-            {
-                DeleteDeck(allDecks[i]);
-            });
-
-
-            menuStrip.Items.Add(menuOptions);
-
-            return menuStrip;
-        }
-
-        private Button CreateDeckButton(List<string> allDecks, int i)
-        {
-            var deckButton = new Button();
-
-            deckButton.Size = new Size(150, 50);
-            deckButton.Location = new Point(10,
-                (i * 10) + (i * deckButton.Size.Height));
-            deckButton.Text = allDecks[i];
-            deckButton.Click += DeckClick;
-            deckButton.Name = "deckButton";
-            deckButton.Show();
-            return deckButton;
-        }
-
-        private Button CreateDeleteButton(List<string> allDecks, int i, Button deckButton)
-        {
-            var deleteButton = new Button();
-            deleteButton.Text = "X";
-            deleteButton.Size = new Size(30, 30);
-            deleteButton.Location = new Point(deckButton.Location.X + deckButton.Size.Width + 10,
-                deckButton.Location.Y + (deckButton.Size.Height / 2) - (deleteButton.Size.Height / 2));
-            deleteButton.Click += DeleteButton_Click;
-            deleteButton.Name = allDecks[i];
-            deleteButton.Show();
-            return deleteButton;
-        }
-
-        private void DeleteButton_Click(object? sender, EventArgs e)
-        {
-            if (sender == null)
-            {
-                allDecksLabel.Text = "Why?";
-                return;
-            }
-            var deleteBtn = (Button)sender;
-            var deckName = deleteBtn.Name;
-            DeleteDeck(deckName);
-        }
-
-        private void DeleteDeck(string deckName)
-        {
-            var confirmDialog = new ConfirmDialog(() =>
-            {
-                deckRepository.DeleteDeck(deckName);
-                ReloadDecks();
-            });
-            confirmDialog.SetDeckName(deckName);
-            confirmDialog.ShowDialog();
         }
 
         private void DeckClick(object? sender, EventArgs e)
@@ -159,16 +72,6 @@ namespace MTGApplication
         private void DeckIsClosed(object? sender, EventArgs e)
         {
             ReloadDecks();
-        }
-    }
-
-    public class ComboboxItem
-    {
-        public string Text { get; set; }
-
-        public override string ToString()
-        {
-            return Text;
         }
     }
 }

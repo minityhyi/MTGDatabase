@@ -30,7 +30,6 @@ namespace magicDatabase.DependencyConventions
             builder.RegisterType<GetSide>().Named<ICommand>(nameof(GetSide));
             builder.RegisterType<ExportDeck>().Named<ICommand>(nameof(ExportDeck));
             builder.RegisterType<ImportDeck>().Named<ICommand>(nameof(ImportDeck));
-            builder.RegisterType<Copy>().Named<ICommand>(nameof(Copy));
 
             
         }
