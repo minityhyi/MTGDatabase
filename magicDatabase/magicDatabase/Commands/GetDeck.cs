@@ -1,3 +1,4 @@
+using MTG.Common.DomainModels;
 using MTG.Common.Repository.Interfaces;
 
 namespace magicDatabase.Commands
@@ -23,9 +24,12 @@ namespace magicDatabase.Commands
 
             string deckName = args[0];
 
-            deckRepo.GetDeck(deckName);
+            var cards = deckRepo.GetDeck(deckName);
 
-
+            foreach (var card in cards)
+            {
+                Console.WriteLine(card.Name);
+            }
 
             return 0;
         }

@@ -32,6 +32,10 @@
             deckNameTextbox = new TextBox();
             renameBtn = new Button();
             renameLabel = new Label();
+            CardsPanel = new Panel();
+            SearchCardPanel = new Panel();
+            SearchTextbox = new TextBox();
+            SearchBtn = new Button();
             SuspendLayout();
             // 
             // DeckNameLabel
@@ -69,11 +73,46 @@
             renameLabel.Size = new Size(0, 15);
             renameLabel.TabIndex = 3;
             // 
+            // CardsPanel
+            // 
+            CardsPanel.Location = new Point(29, 56);
+            CardsPanel.Name = "CardsPanel";
+            CardsPanel.Size = new Size(362, 382);
+            CardsPanel.TabIndex = 4;
+            // 
+            // SearchCardPanel
+            // 
+            SearchCardPanel.Location = new Point(397, 56);
+            SearchCardPanel.Name = "SearchCardPanel";
+            SearchCardPanel.Size = new Size(391, 382);
+            SearchCardPanel.TabIndex = 5;
+            // 
+            // SearchTextbox
+            // 
+            SearchTextbox.Location = new Point(397, 27);
+            SearchTextbox.Name = "SearchTextbox";
+            SearchTextbox.Size = new Size(310, 23);
+            SearchTextbox.TabIndex = 6;
+            // 
+            // SearchBtn
+            // 
+            SearchBtn.Location = new Point(713, 26);
+            SearchBtn.Name = "SearchBtn";
+            SearchBtn.Size = new Size(75, 23);
+            SearchBtn.TabIndex = 7;
+            SearchBtn.Text = "Search";
+            SearchBtn.UseVisualStyleBackColor = true;
+            SearchBtn.Click += SearchBtn_Click;
+            // 
             // DeckForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(SearchBtn);
+            Controls.Add(SearchTextbox);
+            Controls.Add(SearchCardPanel);
+            Controls.Add(CardsPanel);
             Controls.Add(renameLabel);
             Controls.Add(renameBtn);
             Controls.Add(deckNameTextbox);
@@ -90,5 +129,9 @@
         private TextBox deckNameTextbox;
         private Button renameBtn;
         private Label renameLabel;
+        private Panel CardsPanel;
+        private Panel SearchCardPanel;
+        private TextBox SearchTextbox;
+        private Button SearchBtn;
     }
 }
