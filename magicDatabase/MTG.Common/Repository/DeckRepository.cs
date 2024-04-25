@@ -229,15 +229,17 @@ namespace MTG.Common.Repositories
 
         public void ImportDeck(string path)
         {
-
-            //extract the name of the deck from the filepath, and creates an empty with the name
             string deckName = Path.GetFileNameWithoutExtension(path);
-            Console.WriteLine(deckName);
-            context.Decks.Add(new Deck{
-            DeckName = deckName
+            context.Decks.Add(new Deck
+            {
+                DeckName = deckName
             });
             context.SaveChanges();
-            //finds the deckId of the newly created deck
+            FormatDeck(path, deckName);
+        }
+
+        private void FormatDeck(string path, string deckName)
+        {
             var deckId = context.Decks.FirstOrDefault(d => d.DeckName == deckName)?.Id;
 
             string text = File.ReadAllText(path);
@@ -267,10 +269,10 @@ namespace MTG.Common.Repositories
                     for (int i = 0; i < quantity; i++)
                     {
                         Card? card = Card.FindCard(cardName);
-                        if(boardChecker == 1)
-                        card.IsSideBoard = false;
+                        if (boardChecker == 1)
+                            card.IsSideBoard = false;
                         if (boardChecker == 2)
-                        card.IsSideBoard = true;
+                            card.IsSideBoard = true;
 
                         card.DeckId = deckId.Value;
 
@@ -319,9 +321,6 @@ Sideboard:
 
             context.SaveChanges();
         }
-
-
-        //methode: impoert decklist: imports text file
 
     }
 }
