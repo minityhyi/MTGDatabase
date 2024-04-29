@@ -56,7 +56,10 @@ namespace MTGApplication
                 cardButton.Name = "deckButton";
                 cardButton.Show();
 
+                var deleteButton = CreateDeleteButton(cards, i, cardButton);
+
                 CardsPanel.Controls.Add(cardButton);
+                CardsPanel.Controls.Add(deleteButton);
             }
 
         }
@@ -127,5 +130,36 @@ namespace MTGApplication
 
             deckRepository.AddCardToDeck(OriginalDeckName, card, true);
         }
+
+        private Button CreateDeleteButton(List<Card> cards, int i, Button CreateCardButton)
+        {
+            var deleteButton = new Button();
+            deleteButton.Text = "X";
+            deleteButton.Size = new Size(30, 30);
+            deleteButton.Location = new Point(CreateCardButton.Location.X + CreateCardButton.Size.Width + 10,
+                CreateCardButton.Location.Y + (CreateCardButton.Size.Height / 2) - (deleteButton.Size.Height / 2));
+            deleteButton.Click += DeleteButton_Click;
+            deleteButton.Name = cards[i].Name;
+            deleteButton.Show();
+            return deleteButton;
+        }
+
+        private void DeleteButton_Click(object? sender, EventArgs e)
+        {
+            var deleteBtn = (Button)sender;
+            var cardName = deleteBtn.Name;
+            DeleteCard(cardName);
+        }
+
+        private void DeleteCard(string cardName)
+        {
+            var confirmDialog = new ConfirmDialog(() =>
+            {
+                deckRepository.RemoveCard(OriginalDeckName, cardName);
+            });
+            confirmDialog.SetDeckName(cardName);
+            confirmDialog.ShowDialog();
+        }
+
     }
 }
