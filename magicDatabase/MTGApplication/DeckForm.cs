@@ -149,6 +149,7 @@ namespace MTGApplication
             var deleteBtn = (Button)sender;
             var cardName = deleteBtn.Name;
             DeleteCard(cardName);
+            ReloadCards();
         }
 
         private void DeleteCard(string cardName)
